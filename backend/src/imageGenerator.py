@@ -1,6 +1,10 @@
 import os
-from groq import Groq  
 import json
+import uuid
+
+from groq import Groq  
+from huggingface_hub import InferenceClient
+            
 
 # Initialize the Groq client
 def get_groq_client(api_key=None):
@@ -47,13 +51,48 @@ def improve_prompt(prompt=None, api_key=None) -> str:
         print(f"Error improving prompt with Groq: {e}")
         raise RuntimeError(f"Failed to improve prompt: {e}")
 
-def generate_image(prompt, api_key=None):
+def generate_image(prompt):
     try:
         if prompt is None:
             return "Please enter a prompt for image generation"
-        # api call 
 
-        return f"Image generated from prompt: {prompt}"
+        api_key =os.environ.get("HUGGING_FACE_API_KEY")
+        # api call 
+        client = InferenceClient(
+            provider="hf-inference",
+            api_key = api_key
+        )
+        print(api_key)
+
+        # output is a PIL.Image object
+        image = client.text_to_image(
+            prompt,  # Use the provided prompt instead of hardcoded text
+            model="black-forest-labs/FLUX.1-dev"
+        )
+        
+        try:
+            # Create a directory for images if it doesn't exist
+            os.makedirs("./generated_images", exist_ok=True)
+            
+            # Generate a unique filename using UUID
+            filename = f"./generated_images/image_{uuid.uuid4()}.png"
+            
+            # Save the PIL image to file
+            image.save(filename)
+            
+            # Return both the image object and the file path
+            return {"image": image, "filepath": filename}
+        except Exception as e:
+            print(f"Error saving generated image: {e}")
+            return {"image": image, "error": f"Failed to save image: {str(e)}"}
+        
+
     except Exception as e:
         print(f"Error generating image: {e}")
         return f"Error generating image: {str(e)}"
+    
+    
+    
+    
+    
+    

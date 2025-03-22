@@ -15,7 +15,7 @@ def generate_image_route():
     image = generate_image(improved_prompt)
 
     # Return the improved prompt and image
-    return {"improved_prompt": improved_prompt}
+    return {"improved_prompt": image}
     
 @app.route('/health')
 def health_check():
