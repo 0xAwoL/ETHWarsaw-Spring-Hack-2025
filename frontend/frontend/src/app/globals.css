@@ -24,3 +24,17 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+.radio-button {
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  background-color: gray;
+  color: black; /* Set text color to black */
+  transition: background-color 0.3s ease;
+}
+
+.radio-button.selected {
+  background-color: #f97316; /* Same orange as inputs and button */
+  color: black; /* Ensure text stays black when selected */
+}

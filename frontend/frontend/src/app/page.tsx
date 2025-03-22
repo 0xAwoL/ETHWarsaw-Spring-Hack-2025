@@ -17,6 +17,7 @@ export default function Home() {
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors },
   } = useForm<FormData>();
 
@@ -45,51 +46,45 @@ export default function Home() {
     <div className="min-h-screen flex">
       {/* Left section - Form */}
       <div className="w-1/2 flex items-center justify-center bg-black p-6">
-        <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
+        <div className="p-6 w-full max-w-md">
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-            <div>
-              <label className="block text-sm font-medium text-gray-700">Who do you want to reincarnate?</label>
-              <input 
+            <div className="flex items-center space-x-4"> <label className="text-sm font-medium text-white w-1/3">Who do you want to reincarnate?</label> <input 
                 type="text" 
                 {...register("name", { required: "Name is required" })} 
-                className="mt-1 p-2 w-full border rounded-md"
+                className="mt-1 p-2 w-full border border-orange-500 bg-orange-500 text-white"
                 disabled={loading}
               />
               {errors.name && <p className="text-red-500 text-sm">{errors.name.message}</p>}
             </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700">What do you want he/she to say?</label>
-              <input 
+            <div className="flex items-center space-x-4"> <label className="text-sm font-medium text-white w-1/3">What do you want he/she to say?</label> <input 
                 type="text" 
                 {...register("text", { required: "Text is required" })} 
-                className="mt-1 p-2 w-full border rounded-md"
+                className="mt-1 p-2 w-full border border-orange-500 bg-orange-500 text-white"
                 disabled={loading}
               />
               {errors.text && <p className="text-red-500 text-sm">{errors.text.message}</p>}
             </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700">Choose the pose</label>
+            <div className="flex items-center space-x-4"> <label className="text-sm font-medium text-white w-1/3">Choose the pose</label> 
               <div className="flex space-x-4">
-                <label className="flex items-center">
-                  <input type="radio" value="seating" {...register("pose", { required: "Pose is required" })} className="mr-2" disabled={loading} />
+                <label className={`radio-button ${watch('pose') === 'seating' ? 'selected' : ''}`}>
+                  <input type="radio" value="seating" {...register("pose", { required: "Pose is required" })} className="hidden" disabled={loading} />
                   Seating
                 </label>
-                <label className="flex items-center">
-                  <input type="radio" value="standing" {...register("pose", { required: "Pose is required" })} className="mr-2" disabled={loading} />
+                <label className={`radio-button ${watch('pose') === 'standing' ? 'selected' : ''}`}>
+                  <input type="radio" value="standing" {...register("pose", { required: "Pose is required" })} className="hidden" disabled={loading} />
                   Standing
                 </label>
               </div>
               {errors.pose && <p className="text-red-500 text-sm">{errors.pose.message}</p>}
             </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700">Choose the format</label>
+            <div className="flex items-center space-x-4"> <label className="text-sm font-medium text-white w-1/3">Choose the format</label> 
               <div className="flex space-x-4">
-                <label className="flex items-center">
-                  <input type="radio" value="16:9" {...register("ratio", { required: "Ratio is required" })} className="mr-2" disabled={loading} />
+                <label className={`radio-button ${watch('ratio') === '16:9' ? 'selected' : ''}`}>
+                  <input type="radio" value="16:9" {...register("ratio", { required: "Ratio is required" })} className="hidden" disabled={loading} />
                   16:9
                 </label>
-                <label className="flex items-center">
-                  <input type="radio" value="9:16" {...register("ratio", { required: "Ratio is required" })} className="mr-2" disabled={loading} />
+                <label className={`radio-button ${watch('ratio') === '9:16' ? 'selected' : ''}`}>
+                  <input type="radio" value="9:16" {...register("ratio", { required: "Ratio is required" })} className="hidden" disabled={loading} />
                   9:16
                 </label>
               </div>
@@ -97,17 +92,20 @@ export default function Home() {
             </div>
             <button 
               type="submit" 
-              className="w-full bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600 disabled:bg-gray-400"
+              className="w-full bg-orange-500 text-white p-2 rounded-lg hover:bg-orange-600 disabled:bg-gray-400"
               disabled={loading}
             >
-              {loading ? "Generating..." : "Generate"}
+              {loading ? "G E N E R A T I N G" : "G E N E R A T E"}
             </button>
           </form>
         </div>
       </div>
       
       {/* Separator */}
-      <div className="w-0.5 bg-gray-300 h-3/4"></div>
+      <div className="flex flex-col items-center w-0.5 h-1/2 bg-gray-300 self-center">
+        <img src="/logo.png" alt="Logo" className="w-12 h-12 mb-4" />
+        <div className="h-full w-0.5 bg-gray-300"></div>
+      </div>
       
       {/* Right section - Video display */}
       <div className="w-1/2 flex items-center justify-center bg-black">
@@ -127,4 +125,5 @@ export default function Home() {
     </div>
   );
 }
+
 
