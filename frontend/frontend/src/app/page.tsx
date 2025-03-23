@@ -28,6 +28,10 @@ interface FormData {
   ratio: "16:9" | "9:16";
 }
 
+interface Response {
+  url: string;
+}
+
 export default function Home() {
   const form = useForm<FormData>({
     mode: "onBlur",
@@ -52,9 +56,8 @@ export default function Home() {
         body: JSON.stringify(data),
       });
       console.log("Successful response!");
-      const blob = await response.blob();
-      const videoObjectUrl = URL.createObjectURL(blob);
-      setVideoUrl(videoObjectUrl);
+      const responseData: Response = await response.json();
+      setVideoUrl(responseData.url);
     } catch (error) {
       console.error("Error submitting form:", error);
     } finally {
