@@ -75,7 +75,7 @@ export default function Home() {
   return (
     <div className="min-h-screen flex flex-col items-center justify-start">
       <div className="h-80 flex items-center">
-        <img src="/favicon.ico" alt="Logo" className="w-32 h-32" />
+        <img src="/logo.png" alt="Logo" className="w-60 h-60" />
       </div>
       <div className="w-full h-1/2 min-h-160 flex mt-8 relative">
         <div className="w-1/2 flex items-center justify-center">
