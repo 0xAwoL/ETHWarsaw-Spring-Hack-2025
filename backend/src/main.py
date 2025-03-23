@@ -10,7 +10,7 @@ import os
 
 app = Flask(__name__)
 
-@app.route('/generate_image', methods=['POST'])
+@app.route('/generateVideo', methods=['POST'])
 def generate_image_route():
     #validate input here [ ]
     data = request.get_json()
