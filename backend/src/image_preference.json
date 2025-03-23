@@ -1,0 +1,96 @@
+
+{
+    "scene_setting_context": {
+      "location": "medieval city",
+      "time_of_day": "sunset",
+      "season": "none",
+      "weather": "clear",
+      "indoors_outdoors": "outdoors",
+      "environment_style": "fantasy"
+    },
+    "subjects": {
+      "main_object": "large dragon",
+      "additional_subjects": [
+        "none"
+      ],
+      "subject_interaction": "flying above the city, breathing fire",
+      "poses_actions": "flying, breathing fire"
+    },
+    "subject_appearance": {
+      "physical_features": {
+        "color": "green",
+        "eye_color": "golden",
+        "scale_type": "shimmering",
+        "wings": "large, spread wide"
+      },
+      "clothing": "none",
+      "accessories": "none",
+      "expression": "majestic, slightly dangerous"
+    },
+    "composition_framing": {
+      "angle_perspective": "wide shot",
+      "depth_of_field": "focused on the dragon, background slightly blurred",
+      "orientation": "landscape",
+      "symmetry_asymmetry": "asymmetrical",
+      "proportions": "realistic"
+    },
+    "color_palette": {
+      "dominant_colors": [
+        "orange",
+        "purple"
+      ],
+      "accent_colors": [
+        "gold",
+        "green"
+      ],
+      "contrast_lighting": "high contrast, warm sunset lighting",
+      "mood_via_color": "majestic, awe-inspiring"
+    },
+    "style": {
+      "artistic_style": "semi-realistic, fantasy",
+      "level_of_detail": "high detail",
+      "texture": "smooth, realistic",
+      "influences": "fantasy"
+    },
+    "lighting": {
+      "light_source": "sunset",
+      "light_intensity": "golden, soft",
+      "shadows": "long shadows",
+      "lighting_mood": "majestic, dramatic"
+    },
+    "background_surroundings": {
+      "background_elements": [
+        "medieval stone buildings",
+        "distant mountains"
+      ],
+      "distance_focus": "focused on the dragon, blurry background",
+      "additional_objects": [
+        "none"
+      ],
+      "texture_of_background": "slightly blurred, soft lighting"
+    },
+    "action_motion": {
+      "movement": "dragon flying",
+      "action_details": "breathing fire",
+      "speed_of_movement": "slow, steady flight"
+    },
+    "mood_emotion": {
+      "tone_atmosphere": "majestic, awe-inspiring",
+      "message": "fantasy, power",
+      "emotional_context": "excitement, wonder"
+    },
+    "additional_effects": {
+      "special_effects": [
+        "glowing fire",
+        "smoke trailing behind the dragon"
+      ],
+      "post_processing": "slightly enhanced colors, glow effect on fire",
+      "overlay_text": "none"
+    },
+    "size_resolution": {
+      "image_dimensions": "1920x1080",
+      "aspect_ratio": "16:9",
+      "image_quality": "high"
+    }
+  }
+  
