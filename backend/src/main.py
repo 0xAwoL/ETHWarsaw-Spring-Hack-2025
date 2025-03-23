@@ -1,6 +1,9 @@
+from time import sleep
+
 from flask import Flask, request, jsonify
 from marshmallow import Schema, fields
-from imageGenerator import improve_prompt, generate_image, generate_talking_photo, generate_avatar_video, upload_avatar_image
+from imageGenerator import improve_prompt, generate_avatar_video, analyze_gender, get_video_status, upload_image_asset, \
+    generate_image, upload_talking_photo
 import requests
 import dotenv 
 import os
@@ -10,46 +13,49 @@ app = Flask(__name__)
 @app.route('/generate_image', methods=['POST'])
 def generate_image_route():
     #validate input here [ ]
-
     data = request.get_json()
 
     # restructure data
-    prompt = data["prompt"]    
-    format = data["preferences"]["format"]
-    pose = data["preferences"]["pose"]
-    voiceover = data["preferences"]["voiceover"]
+    prompt = data["name"]
+    format = data["ratio"]
+    pose = data["pose"]
+    voiceover = data["text"]
 
     gender = analyze_gender(prompt)
-    improved_prompt = improve_prompt(prompt, gender)
+    improved_prompt = improve_prompt(prompt)
 
+    file_name = generate_image(prompt)
 
-    # upload image asset
-    {image_id, image_name} = upload_image_asset(file_name)
+    # upload image asset -> Not needed
+    # image_id, image_name = upload_image_asset(file_name)
 
     # create avatar  ? 
-    talking_photo = generate_talking_photo(image_id, image_name)
+    talking_photo_id, talking_photo_url = upload_talking_photo(file_name)
 
-    
     # inject all preferences
-    video_id = generate_avatar_video(voiceover, avatar_id, gender)
+    gender = "male" # because female doesn't work properly at the moment
+    video_id = generate_avatar_video(voiceover, gender, talking_photo_id)
 
     # monitor status of this video
-    video_url =  
-    for i in range (10):
-        r = check_video_status(video_id)
+    video_url =  ""
+    for i in range (15):
         sleep(3)
-        if r:
-            if r.get("status") == "completed":
-                video_url = r.get("video_url")
-                break  
+        response_json = get_video_status(video_id)
+        if response_json and response_json["data"]["status"] == "completed":
+                video_url = response_json["data"]["video_url"]
+                break
+
+    if video_url == "":
+        raise Exception('timeout')
 
     # Return the improved prompt and image
-    return {"video_url": video_url}
-    
+    return {"url": video_url}
+
+
 @app.route('/health')
 def health_check():
     return {"status": "alive"}  
 
  
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=False)
