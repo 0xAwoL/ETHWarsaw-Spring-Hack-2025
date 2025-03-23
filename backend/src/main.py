@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify
 from marshmallow import Schema, fields
-from imageGenerator import improve_prompt, generate_image
+from imageGenerator import improve_prompt, generate_image, generate_talking_photo, generate_avatar_video, upload_avatar_image
 import requests
 import dotenv 
 import os
@@ -14,20 +14,21 @@ def generate_image_route():
     data = request.get_json()
 
     # restructure data
-    prompt = data.prompt    
-    format = data.preferences.format
-    pose = data.preferences.pose
-    voiceover = data.preferences.voiceover
+    prompt = data["prompt"]    
+    format = data["preferences"]["format"]
+    pose = data["preferences"]["pose"]
+    voiceover = data["preferences"]["voiceover"]
 
     gender = analyze_gender(prompt)
     improved_prompt = improve_prompt(prompt, gender)
 
-    talking_photo = generate_talking_photo(image)
 
     # upload image asset
-    image_id = upload_avatar_image(file_name)
+    {image_id, image_name} = upload_image_asset(file_name)
 
     # create avatar  ? 
+    talking_photo = generate_talking_photo(image_id, image_name)
+
     
     # inject all preferences
     video_id = generate_avatar_video(voiceover, avatar_id, gender)

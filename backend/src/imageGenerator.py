@@ -122,15 +122,32 @@ def generate_image(prompt):
         print(f"Error generating image: {e}")
         return f"Error generating image: {str(e)}"
    
-def upload_avatar_image(image_path):
+def upload_image_asset(image_path):
     url = "https://upload.heygen.com/v1/asset"
     api_key = os.environ.HEYGEN_API_KEY
 
     with open(image_path, "r") as f:
         resp = requests.post("https://upload.heygen.com/v1/asset", data=image, headers={"Content-Type": "image/jpeg", "x-api-key": api_key}) 
-        avatar_id = resp.id
-        return avatar_id
-    
+        image_id = resp["id"]
+        image_name = resp["id"]
+        return {image_id, image_name}
+
+def generate_talking_photo(image_id, image_name):
+    url = "https://api.heygen.com/v2/photo_avatar/avatar_group/create"
+
+   payload = {
+    "name": image_id,
+    "image_key": image_name,
+    "generation_id": image_id"
+}
+    headers = {
+        "accept": "application/json",
+        "content-type": "application/json",
+        "x-api-key": os.environ.get("HEY_GEN_API_KEY")
+    }
+
+    response = requests.post(url, json=payload, headers=headers)
+    return response.data.id
     
 def generate_avatar_video(voiceover, gender, avatar_id):
     url = "https://api.heygen.com/v2/video/generate"
@@ -179,7 +196,6 @@ def generate_avatar_video(voiceover, gender, avatar_id):
     response = requests.post(url, json=payload, headers=headers)
     return response.text
 
-
 def check_video_status(video_id):
     url = "https://api.heygen.com/v1/video_status.get"
     payload = {
@@ -193,5 +209,3 @@ def check_video_status(video_id):
 
     response = requests.get(url, json=payload, headers=headers)
     return response.text
-
-    
